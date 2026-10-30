@@ -2,7 +2,7 @@
 type: brief
 engagement: fx-hedging
 capability: fx-hedging
-date: 2026-10-23
+date: 2026-10-30
 status: committed
 hypothesis: "I expect the forward hedge to provide the most predictable USD proceeds, while the put option will preserve upside potential at a higher cost."
 ---
@@ -11,7 +11,7 @@ hypothesis: "I expect the forward hedge to provide the most predictable USD proc
 
 **To:** Chief Financial Officer  
 **From:** Financial Analyst  
-**Date:** October 23, 2026  
+**Date:** October 30, 2026  
 **Subject:** Managing Foreign Exchange Risk on EUR 21.5 Million Receivable
 
 ## Exposure and Business Risk
