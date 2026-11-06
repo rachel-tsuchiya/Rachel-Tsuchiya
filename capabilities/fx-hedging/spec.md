@@ -161,22 +161,46 @@ Any documented transaction costs will be deducted consistently to calculate net 
 
 ## 7. Validation Rules
 
-The workbook will verify that:
+The workbook will include automated validation checks to ensure that inputs, calculations, and outputs are accurate and consistent. Each check will display a PASS, WARNING, or FAIL status on the Notes & Assumptions worksheet.
 
-- The EUR receivable and settlement period are positive.
-- Exchange rates and interest rates use consistent units.
-- The forward hedge produces fixed USD proceeds across exchange-rate scenarios.
-- The money-market hedge produces fixed USD proceeds when borrowing and investment rates are held constant.
-- The put option provides downside protection while allowing upside participation.
-- All formulas reference centralized input cells.
+**1. Input Validation:** Confirm that `FC_AMT` and `T_DAYS` are positive, that `S0_in`, `F0_in`, `K_PUT`, and `K_CALL` are greater than zero, and that `PREM_PUT` and `PREM_CALL` are nonnegative. Interest factors `1 + R_USD*T_DAYS/360` and `1 + R_FC*T_DAYS/360` must be positive to prevent invalid calculations. Missing or nonnumeric inputs will trigger FAIL.
+
+**2. Currency and Unit Consistency:** Verify that exchange rates are expressed in USD/EUR, option premiums in USD/EUR, and interest rates as annual decimal values. All strategy outputs must be in USD at the 91-day settlement date. The model will flag inconsistent labels or units for review.
+
+**3. Forward Hedge Check:** Verify that `Forward_USD = FC_AMT * F0_in` before transaction costs. Forward proceeds must remain unchanged across all 11 future spot-rate scenarios. Any variation will trigger FAIL.
+
+**4. Money-Market Hedge Check:** Verify that `EUR_Borrowed * (1 + R_FC*T_DAYS/360) = FC_AMT`, within a numerical tolerance of EUR 0.01. Money-market proceeds must also remain constant across sensitivity scenarios when the input rates remain fixed.
+
+**5. Put Option Check:** Verify that `Put_USD = FC_AMT * MAX(ST, K_PUT) - Put_Premium_FV` before additional transaction costs. Below the put strike, net proceeds must remain at the protected floor. Above the strike, net proceeds must increase with the future spot rate.
+
+**6. Call Option Check:** Verify that the call payoff equals `FC_AMT * MAX(ST - K_CALL, 0)` and is never negative. The call-purchase calculation must be labeled as a reference for buying EUR, not as a direct hedge for the EUR receivable.
+
+**7. Covered Interest Rate Parity (CIRP) Check:** Calculate `Parity_Forward = S0_in * (1 + R_USD*T_DAYS/360) / (1 + R_FC*T_DAYS/360)` and compare it with `F0_in`. Calculate `Parity_Difference = F0_in - Parity_Forward`. A discrepancy greater than 0.005 USD/EUR will trigger WARNING for investigation of market timing, interest-rate assumptions, or transaction spreads. This tolerance is an illustrative review threshold, not a universal market standard.
+
+**8. Sensitivity Check:** Confirm that the Sensitivity worksheet includes exactly 11 scenarios from -5% to +5% in 1% increments, with no missing values or formula errors. The model will verify that the unhedged position changes proportionally with the future spot rate.
+
+**9. Output and Error Handling:** All required outputs must be numeric, finite, and labeled in USD. The workbook will flag missing inputs, broken references, division-by-zero errors, and negative option premiums. Any FAIL status must be resolved before the model is considered ready for decision-making. WARNING statuses must be documented and investigated.
 
 ## 8. Model Outputs
 
 The final workbook will display:
 
-- Net USD proceeds under each hedging strategy.
-- A comparison table showing hedge outcomes.
-- A sensitivity analysis across 11 exchange-rate scenarios.
-- A chart comparing the three hedging strategies and the unhedged position.
-- Validation results and warnings.
-- A summary identifying the most appropriate strategy under the stated assumptions.
+The completed Excel workbook will provide clearly labeled financial outputs to support the CFO's evaluation of foreign exchange hedging alternatives for the EUR 21,500,000 receivable.
+
+**1. Exposure Summary:** The Cover worksheet will display the EUR receivable, 91-day settlement period, current spot rate, indicative forward rate, and primary currency risk. The Inputs worksheet will contain the ten required named ranges with values, units, and data-source notes.
+
+**2. Forward Hedge Results:** The Forward worksheet will show the contracted exchange rate, gross USD proceeds, applicable transaction costs, and net USD settlement proceeds. At the indicative rate of 1.1653 USD/EUR, gross proceeds should equal USD 25,053,950.
+
+**3. Money-Market Hedge Results:** The Money Market worksheet will display the EUR amount borrowed today, USD converted and invested today, EUR loan repayment at maturity, and net USD investment proceeds at settlement. The implied effective exchange rate will be calculated as net USD proceeds divided by `FC_AMT`.
+
+**4. Currency Option Results:** The Options worksheet will show the EUR put strike, premium per euro, total upfront premium, premium future value, exercise decision, and net USD settlement proceeds. A separate call-option reference calculation will display its strike, premium, payoff, and EUR purchase cost without presenting it as a hedge for the receivable.
+
+**5. Sensitivity Comparison Table:** The Sensitivity worksheet will present 11 scenarios from -5% to +5% in 1% increments. Each row will show the future EUR/USD spot rate and net USD proceeds for the unhedged position, forward hedge, money-market hedge, and protective put. Additional columns will calculate each hedge's dollar advantage or disadvantage relative to remaining unhedged.
+
+**6. Sensitivity Chart:** A line chart will compare the four strategies, with future EUR/USD spot rates on the horizontal axis and net USD settlement proceeds on the vertical axis. The chart will clearly distinguish fixed-proceeds hedges from strategies that retain exchange-rate upside.
+
+**7. Validation Summary:** The Notes & Assumptions worksheet will display PASS, WARNING, or FAIL results for input integrity, calculation consistency, option payoff behavior, sensitivity completeness, and covered interest rate parity. Any unresolved warnings or failures will be documented.
+
+**8. Decision Summary:** The workbook will provide a concise comparison of net proceeds, downside protection, upside participation, upfront costs, and major limitations for each strategy. A final recommendation will be based on the model results and the company's preference for cash-flow certainty versus potential upside. No strategy will be labeled universally superior without considering the assumptions and market conditions.
+
+All financial outputs will use USD at the 91-day settlement date unless explicitly labeled otherwise. The model will distinguish illustrative inputs from verified market data and identify the valuation date and sources once those figures are obtained in Stage 4.
