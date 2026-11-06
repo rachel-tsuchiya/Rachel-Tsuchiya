@@ -35,13 +35,18 @@ The missing values will be researched and verified using appropriate market-data
 
 ## 3. Workbook Architecture
 
-The Excel workbook will contain five worksheets:
+The Excel workbook will contain eight worksheets, organized as follows:
 
-- **Inputs:** Centralized assumptions, exchange rates, interest rates, and transaction costs.
-- **Calculations:** Formulas for the unhedged position and three hedging strategies.
-- **Sensitivity:** Exchange-rate scenarios and their impact on USD proceeds.
-- **Validation:** Formula checks, unit consistency, and error flags.
-- **Dashboard:** Summary comparison of hedge outcomes and financial recommendations.
+1. **Cover:** Project title, Scenario 27 (LNG Marketer), author, date, and a brief description of the FX exposure.
+2. **Legend/Key:** Explanation of input formatting, named ranges, units, formula conventions, and model terminology.
+3. **Inputs:** Centralized input values, including the EUR receivable, spot and forward rates, interest rates, option strikes, premiums, and settlement period. All ten required named ranges will be defined here.
+4. **Forward:** Calculation of USD proceeds from selling the EUR receivable at the 91-day forward rate, including any transaction costs.
+5. **Money Market:** Calculation of EUR borrowing, conversion into USD at the current spot rate, and investment of USD proceeds through settlement.
+6. **Options:** EUR put and call option payoff calculations, upfront premiums, and net USD proceeds across different settlement exchange rates. The put hedge will be evaluated as the primary protective option for the EUR receivable.
+7. **Sensitivity:** Comparison of unhedged, forward, money-market, and option outcomes across EUR/USD settlement rates from -5% to +5% in 1% increments, including a comparison chart.
+8. **Notes & Assumptions:** Documentation of model assumptions, interest-rate conventions, data sources, limitations, and validation checks.
+
+All calculation worksheets will reference the centralized named ranges on the Inputs worksheet to ensure consistency and simplify future updates.
 
 ## 4. Assumptions and Constraints
 
