@@ -17,16 +17,19 @@ The model will include the following inputs:
 
 | Input | Value | Unit |
 |---|---|---|
-| EUR Receivable | 21,500,000 | EUR |
-| Time to Settlement | 91 | Days |
-| Forward Exchange Rate | 1.1653 | USD/EUR |
-| EUR Put Premium | 0.0147 | USD/EUR |
-| EUR Call Premium | 0.0199 | USD/EUR |
-| Spot Exchange Rate | TBD | USD/EUR |
-| EUR Interest Rate | TBD | Annual % |
-| USD Interest Rate | TBD | Annual % |
-| Put Strike Price | TBD | USD/EUR |
-| Transaction Costs | TBD | USD |
+| Named Range | Placeholder Value | Unit |
+| `FC_AMT` | 21,500,000 | EUR |
+| `S0_in` | 1.1653 | USD/EUR |
+| `F0_in` | 1.1653 | USD/EUR |
+| `R_USD` | 5.30% | Annual |
+| `R_FC` | 3.00% | Annual |
+| `K_PUT` | 1.1653 | USD/EUR |
+| `K_CALL` | 1.1653 | USD/EUR |
+| `PREM_PUT` | 0.0147 | USD/EUR |
+| `PREM_CALL` | 0.0199 | USD/EUR |
+| `T_DAYS` | 91 | Days |
+
+All values are indicative modeling inputs. The spot rate, interest rates, and option strike prices are illustrative placeholders rather than verified market quotes. They will be replaced or verified using timestamped market data in Stage 4.
 
 The missing values will be researched and verified using appropriate market-data sources during Stage 4.
 
