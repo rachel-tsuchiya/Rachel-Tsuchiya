@@ -132,9 +132,32 @@ The base case assumes zero additional transaction costs because no reliable fee 
 
 ## 6. Sensitivity Analysis
 
-The model will evaluate future EUR/USD exchange rates from −5% to +5% of the baseline rate, using 1% increments.
+The Sensitivity worksheet will evaluate how changes in the future EUR/USD spot rate affect USD proceeds under each hedging strategy.
 
-For each scenario, the workbook will calculate the USD proceeds for the unhedged position, forward hedge, money-market hedge, and put option.
+**1. Scenario Range:** The model will generate 11 future spot-rate scenarios, ranging from -5% to +5% relative to the baseline exchange rate, in 1% increments. The baseline will be the current spot rate (`S0_in`) unless a separately documented forward-based reference rate is selected.
+
+**2. Scenario Formula:** For each percentage change (`Change_Pct`), the future spot rate will be calculated as:
+
+`ST = S0_in * (1 + Change_Pct)`
+
+The scenario percentages will be -5%, -4%, -3%, -2%, -1%, 0%, +1%, +2%, +3%, +4%, and +5%.
+
+**3. Strategy Calculations:** For each future spot-rate scenario, the model will calculate:
+
+- Unhedged proceeds: `FC_AMT * ST`
+- Forward hedge: `FC_AMT * F0_in`
+- Money-market hedge: `FC_AMT / (1 + R_FC * T_DAYS/360) * S0_in * (1 + R_USD * T_DAYS/360)`
+- Put hedge: `FC_AMT * MAX(ST, K_PUT) - FC_AMT * PREM_PUT * (1 + R_USD * T_DAYS/360)`
+
+Any documented transaction costs will be deducted consistently to calculate net USD proceeds.
+
+**4. Comparison Table:** The Sensitivity worksheet will display the percentage change, future spot rate, and net USD proceeds for all four strategies in each of the 11 scenarios. It will also calculate the difference between each hedge's proceeds and the unhedged proceeds.
+
+**5. Visualization:** A line chart will plot future EUR/USD spot rates on the horizontal axis and net USD settlement proceeds on the vertical axis. Separate lines will represent the unhedged position, forward hedge, money-market hedge, and put option hedge.
+
+**6. Expected Behavior:** The unhedged proceeds should increase as the euro appreciates. Forward and money-market proceeds should remain constant across scenarios. The put hedge should establish a downside floor after premium costs while retaining upside potential when the euro appreciates above the strike price.
+
+**7. Interpretation:** The model will identify which strategy produces the highest net USD proceeds in each scenario and discuss the trade-off between certainty, premium costs, and upside participation. Scenario outcomes will be treated as sensitivity tests, not exchange-rate forecasts.
 
 ## 7. Validation Rules
 
