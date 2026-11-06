@@ -56,3 +56,22 @@ Based on this feedback, I revised Sections 2–8 of `capabilities/fx-hedging/spe
 
 ### Reflection
 This review helped me understand that a financial model specification needs more than general descriptions. Explicit inputs, formulas, assumptions, and validation rules make the model easier to build, audit, and reproduce. I reviewed and committed the revisions to GitHub in preparation for Stage 3.
+
+
+## Stage 2 — Final Specification Revision
+
+**AI Tool:** ChatGPT  
+**Date:** November 6, 2026  
+**Task:** Condensing the FX Hedging Model Specification
+
+### Prompt Summary
+I asked ChatGPT to help condense my Stage 2 FX Hedging Model Specification after discovering that my original document was approximately eight pages long, exceeding the professor's 2–3-page guideline.
+
+### AI Assistance
+ChatGPT reviewed my specification and identified repetitive explanations and areas where the writing could be more concise. It helped me create a shortened version while preserving the eight required sections, ten named ranges, workbook architecture, hedging calculations, sensitivity analysis, and validation rules.
+
+### Revisions Made
+I reviewed the condensed specification and replaced my original `spec.md` file with the revised version. The updated document is approximately three pages long using 12-point font in Google Docs, meeting the assignment's length guideline.
+
+### Reflection
+This revision helped me understand the importance of balancing technical detail with clarity. Although my original specification contained extensive explanations, I learned that a concise and organized document can communicate the same essential information more effectively. The final specification provides a clearer blueprint for developing my Excel hedging model in Stage 3.
