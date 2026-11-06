@@ -50,33 +50,85 @@ All calculation worksheets will reference the centralized named ranges on the In
 
 ## 4. Assumptions and Constraints
 
-The model assumes that the German utility will pay the full EUR receivable after 91 days. Interest rates will be expressed annually and converted to the 91-day period using a documented day-count convention.
+The model will use the following assumptions and constraints:
 
-The forward exchange rate is assumed to remain available for the specified settlement date. Option premiums are assumed to be paid upfront, and transaction costs will be included where applicable.
+1. **Settlement and Receivable:** The German utility is assumed to pay the full EUR 21,500,000 receivable exactly 91 days after the valuation date. Credit risk and payment delays are excluded from the base model.
+
+2. **Interest-Rate Convention:** Both EUR and USD annual interest rates will use simple interest with an ACT/360 day-count convention. The 91-day interest factor will be calculated as `1 + Annual Rate × (91/360)`. The same convention will be used consistently in money-market calculations and covered interest rate parity checks.
+
+3. **Exchange-Rate Quotation:** All exchange rates will be expressed in USD per EUR. A higher exchange rate means the euro has appreciated against the dollar; a lower rate means the euro has depreciated.
+
+4. **Forward Contract:** The company is assumed to sell the full EUR receivable at the indicative 91-day forward rate of 1.1653 USD/EUR. The forward contract settles on the same date as the receivable.
+
+5. **Money-Market Hedge:** The company can borrow euros and invest U.S. dollars at the stated annual rates. The base model assumes these rates are available for the full 91-day period, with no borrowing restrictions or early repayment penalties.
+
+6. **Currency Options:** The put and call premiums are quoted in USD per EUR and are paid upfront. The protective EUR put is the relevant hedge for the receivable; the EUR call is included for comparison and model completeness. The model will separately show the premium paid today and its settlement-date value using the USD interest rate, so costs are compared at a consistent point in time.
+
+7. **Transaction Costs:** The base model assumes zero additional transaction costs because actual bid-ask spreads, commissions, and bank fees have not yet been supplied. A separate transaction-cost assumption may be added once reliable figures are available. Option premiums are not treated as zero-cost transactions.
+
+8. **Market Data and Limitations:** The spot rate, interest rates, and option strike prices currently serve as illustrative placeholders. They must be verified or replaced with sourced, timestamped market data in Stage 4. Results are conditional on these assumptions and should not be interpreted as executable market quotes.
 
 ## 5. Calculation Flow
 
-**Unhedged Position:**
+The model will use the ten named inputs defined in Section 2. All rates are quoted in USD per EUR, and all net proceeds will be compared at the 91-day settlement date. `ST` represents the future EUR/USD spot rate in each sensitivity scenario; it is a calculated scenario variable, not an additional required input.
 
-USD Proceeds = EUR Receivable × Future Spot Rate
+**1. Unhedged Position**
 
-**Forward Hedge:**
+`Unhedged_USD = FC_AMT * ST`
 
-USD Proceeds = EUR Receivable × Forward Rate − Transaction Costs
+This represents the USD value of the receivable if the company waits until settlement and converts the euros at the prevailing spot rate.
 
-**Money-Market Hedge:**
+**2. Forward Hedge**
 
-EUR Borrowed Today = EUR Receivable ÷ (1 + EUR Interest Rate × 91/360)
+`Forward_USD = FC_AMT * F0_in`
 
-USD Invested Today = EUR Borrowed Today × Current Spot Rate
+At the indicative forward rate, the gross locked-in proceeds are EUR 21,500,000 × 1.1653 = USD 25,053,950. Any separately documented transaction costs will be deducted to calculate net proceeds. The forward result must remain constant across all future spot-rate scenarios.
 
-USD Proceeds = USD Invested Today × (1 + USD Interest Rate × 91/360) − Transaction Costs
+**3. Money-Market Hedge**
 
-**Currency Put Option:**
+`YEAR_FRAC = T_DAYS / 360`
 
-USD Proceeds = EUR Receivable × MAX(Future Spot Rate, Put Strike Price) − Option Premium Cost − Transaction Costs
+`EUR_Borrowed = FC_AMT / (1 + R_FC * YEAR_FRAC)`
 
-Option Premium Cost = EUR Receivable × Put Premium per EUR
+`USD_Invested = EUR_Borrowed * S0_in`
+
+`MoneyMarket_USD = USD_Invested * (1 + R_USD * YEAR_FRAC)`
+
+At settlement, the EUR receivable repays the EUR loan, including interest. The USD investment matures into the hedged proceeds. Borrowing and investment rates must be stored as decimal values (for example, 5.30% = 0.053). Documented transaction costs are deducted separately.
+
+**4. Currency Put Option**
+
+`Put_Premium_Today = FC_AMT * PREM_PUT`
+
+`Put_Premium_FV = Put_Premium_Today * (1 + R_USD * YEAR_FRAC)`
+
+`Put_USD = FC_AMT * MAX(ST, K_PUT) - Put_Premium_FV`
+
+The put provides a minimum conversion rate while preserving the ability to benefit from euro appreciation. The premium is accumulated to settlement using the USD rate to make all strategy proceeds comparable at the same date.
+
+**5. Currency Call Option — Reference Calculation**
+
+`Call_Premium_Today = FC_AMT * PREM_CALL`
+
+`Call_Premium_FV = Call_Premium_Today * (1 + R_USD * YEAR_FRAC)`
+
+`Call_Payoff = FC_AMT * MAX(ST - K_CALL, 0)`
+
+`Call_Purchase_USD = FC_AMT * ST - Call_Payoff + Call_Premium_FV`
+
+The call-purchase formula represents the net USD cost of purchasing EUR at settlement with call protection; it is not a hedge for the company's EUR receivable. The model will label this separately and will not compare this purchase cost directly with the receivable's USD proceeds.
+
+**6. Covered Interest Rate Parity Check**
+
+`Parity_Forward = S0_in * (1 + R_USD * YEAR_FRAC) / (1 + R_FC * YEAR_FRAC)`
+
+`Parity_Difference = F0_in - Parity_Forward`
+
+The model will compare the quoted forward rate against the parity-implied rate. Any material discrepancy will be flagged for review of interest-rate assumptions, bid-ask spreads, and market-data timing.
+
+**7. Transaction Costs and Comparison Basis**
+
+The base case assumes zero additional transaction costs because no reliable fee quotes are provided. If transaction costs are introduced, they must be explicitly documented and deducted consistently. The final comparison will use net USD settlement-date proceeds for the unhedged position, forward hedge, money-market hedge, and put hedge.
 
 ## 6. Sensitivity Analysis
 
