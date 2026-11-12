@@ -10,18 +10,18 @@ A U.S. LNG marketer will receive **EUR 21,500,000 in 91 days** from a German uti
 
 All ten inputs reside on the **Inputs** tab as Excel named ranges:
 
-| Named range | Value | Units |
-|---|---:|---|
-| `FC_AMT` | 21,500,000 | EUR |
-| `S0_in` | 1.1653* | USD/EUR spot |
-| `F0_in` | 1.1653 | USD/EUR forward |
-| `R_USD` | 5.30%* | annual decimal rate |
-| `R_FC` | 3.00%* | annual decimal EUR rate |
-| `K_PUT` | 1.1653* | USD/EUR |
-| `K_CALL` | 1.1653* | USD/EUR |
-| `PREM_PUT` | 0.0147 | USD/EUR |
-| `PREM_CALL` | 0.0199 | USD/EUR |
-| `T_DAYS` | 91 | days |
+| Named Range | Value | Unit | Stage 4 Source |
+|---|---:|---|---|
+| `FC_AMT` | 21,500,000 | EUR | Scenario 27 receivable amount (case brief) |
+| `S0_in` | 1.1653 | USD/EUR | Federal Reserve H.10 EUR/USD daily exchange-rate series (DEXUSEG); record date |
+| `F0_in` | 1.1653 | USD/EUR | Bank's indicative 91-day forward quote (Scenario 27) |
+| `R_USD` | 5.30% | Annual | FRED SOFR series (SOFR); record observation date |
+| `R_FC` | 3.00% | Annual | ECB €STR daily series (EST.B.EU000A2X2A25.WT); record date |
+| `K_PUT` | 1.1653 | USD/EUR | Bank's EUR put option strike quote; confirm with bank |
+| `K_CALL` | 1.1653 | USD/EUR | Bank's EUR call option strike quote; confirm with bank |
+| `PREM_PUT` | 0.0147 | USD/EUR | Bank's indicative EUR put premium (Scenario 27) |
+| `PREM_CALL` | 0.0199 | USD/EUR | Bank's indicative EUR call premium (Scenario 27) |
+| `T_DAYS` | 91 | Days | Scenario 27 settlement period (case brief) |
 
 *Illustrative placeholders, **not verified quotes**. In Stage 4, replace or verify spot, interest rates, and strikes using dated sources; record source URLs, quote timestamps, and bid/ask conventions. Scenario figures are indicative, not executable quotes.*
 
@@ -62,6 +62,16 @@ Generate **11 changes: −5%, −4%, …, 0%, …, +4%, +5%**; for each, `ST = S
 ## 7. Validation Rules
 
 Display **PASS / WARNING / FAIL** on Notes & Assumptions. **FAIL** for missing/non-numeric inputs; nonpositive `FC_AMT`, `T_DAYS`, spot/forward/strikes or interest factors; negative premiums; broken formulas; or nonfinite USD outputs. Check that EUR loan repayment equals `FC_AMT` within **EUR 0.01**, forward/money-market results are constant across scenarios, put payoff has a floor, call payoff is nonnegative, and exactly 11 scenarios appear in 1% steps. Check USD/EUR units and day-91 timing. **WARNING** if `ABS(Parity_Difference) > 0.005 USD/EUR`; investigate quote timing, spreads, and rate assumptions rather than assuming an error. Resolve FAILs and document WARNINGs.
+
+**Forward Hedge — Expected Result:** `21,500,000 × 1.1653 = $25,053,950.00`. Proceeds remain constant across all scenarios.
+
+**Money-Market Hedge — Expected Result:** EUR borrowed = `21,500,000 / (1 + 0.03 × 91/360) = €21,338,185.43`; settlement USD proceeds = `21,500,000 / (1 + 0.03 × 91/360) × 1.1653 × (1 + 0.053 × 91/360) = $25,198,514.60`.
+
+**Put Option — Expected Result (ST = 1.1653):** Upfront premium = `21,500,000 × 0.0147 = $316,050.00`; premium future value = `$320,284.19`; net proceeds = `21,500,000 × MAX(1.1653, 1.1653) − 320,284.19 = $24,733,665.81`.
+
+**Call Option — Expected Result (ST = 1.1653):** Upfront premium = `21,500,000 × 0.0199 = $427,850.00`; premium future value = `$433,582.00`; call payoff = `$0.00`; net EUR purchase cost = `21,500,000 × 1.1653 − 0 + 433,582.00 = $25,487,532.00`. This is a purchase-cost reference, not a receivable hedge.
+
+**CIRP — Expected Result:** Parity-implied forward = `1.172024 USD/EUR`; quoted minus parity-implied forward ≈ `−0.006724 USD/EUR`. The illustrative 0.005 threshold produces a WARNING.
 
 ## 8. Model Outputs
 
