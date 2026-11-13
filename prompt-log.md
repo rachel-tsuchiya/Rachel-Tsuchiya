@@ -75,3 +75,32 @@ I reviewed the condensed specification and replaced my original `spec.md` file w
 
 ### Reflection
 This revision helped me understand the importance of balancing technical detail with clarity. Although my original specification contained extensive explanations, I learned that a concise and organized document can communicate the same essential information more effectively. The final specification provides a clearer blueprint for developing my Excel hedging model in Stage 3.
+
+## Stage 3 — FX Hedging Model Build and Audit
+
+**Course:** FIN 321  
+**Scenario:** 27 — LNG Marketer  
+**AI Tool:** ChatGPT  
+**Date:** November 13, 2026
+
+### Purpose
+I used ChatGPT to help build and audit an Excel-based foreign exchange hedging model using the specifications developed in Stage 2. The objective was to create a functional workbook that compares the financial outcomes of different hedging strategies for a €21,500,000 receivable due in 91 days.
+
+### Prompt Summary
+I asked ChatGPT to use my Stage 2 model specification to generate an Excel workbook containing ten named ranges, eight worksheets, formula-driven hedging calculations, a sensitivity analysis, and validation checks. After generating the workbook, I asked ChatGPT to guide me through auditing the calculations and identifying any discrepancies.
+
+### AI Assistance
+ChatGPT helped develop the workbook architecture, implement formulas for the forward hedge, money-market hedge, protective EUR put, and EUR call reference, and create 11 exchange-rate sensitivity scenarios with a comparison chart. It also guided me through five audit checks to verify the workbook's calculations and expected behavior.
+
+### Audit Findings
+1. **Forward Hedge:** Verified that the formula-driven proceeds equal $25,053,950.00.
+2. **Money-Market Hedge:** Confirmed that the borrowing, conversion, and investment calculations produce $25,198,514.60 in settlement proceeds.
+3. **Currency Options:** Verified the put and call premium calculations, option payoffs, and net results against the expected figures.
+4. **Sensitivity Analysis:** Confirmed that all 11 scenarios were included and that the four strategies responded appropriately to exchange-rate changes.
+5. **Validation Rules:** Confirmed that the covered interest rate parity check displayed a WARNING while the remaining checks displayed PASS.
+
+### Revisions and Limitations
+The audit identified a discrepancy between the indicative forward rate and the forward rate implied by the illustrative interest rates. Rather than changing the assumptions to eliminate the warning, I retained the discrepancy and documented it for further investigation. The model still uses illustrative spot and interest-rate inputs, which will need to be verified or replaced with sourced market data in Stage 4.
+
+### Reflection
+This process helped me understand how AI can support financial modeling while still requiring human oversight. By reviewing the formulas and testing the model's results, I gained a better understanding of how different hedging strategies affect USD cash flows. I also learned that identifying and documenting a model warning is an important part of financial analysis rather than something that should automatically be corrected without investigation.
