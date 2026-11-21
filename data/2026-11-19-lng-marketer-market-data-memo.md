@@ -47,4 +47,27 @@ This discrepancy should not automatically be interpreted as an executable arbitr
 
 ## 5. Workbook Population and Validation
 
-Pending workbook update, sensitivity recalculation, parity check, and FX Hedging Lab comparison.
+The FX hedging workbook (`capabilities/fx-hedging/model.xlsx`) was updated using the November 19, 2026 market observations.
+
+The following inputs were revised:
+
+- `S0_in`: 1.0967 USD/EUR
+- `R_USD`: 4.62%
+- `R_FC`: 3.343%
+- `K_PUT`: 1.0967 USD/EUR
+- `K_CALL`: 1.0967 USD/EUR
+
+The original scenario inputs, including the EUR 21,500,000 receivable, 91-day maturity, 1.1653 USD/EUR indicative forward quote, and bank-provided option premiums, were retained.
+
+**Workbook validation results:**
+
+- **Forward hedge — PASS:** USD proceeds remained $25,053,950.00, calculated using an Excel formula.
+- **Money-market hedge — PASS:** All three calculations matched the expected results and remained formula-driven.
+- **Currency options — PASS:** All seven option calculations matched expected results and remained formula-driven.
+- **Sensitivity analysis — PASS:** All 11 exchange-rate scenarios recalculated correctly, and the chart continued to display the expected hedge behavior.
+- **Input and formula validation — PASS:** All validation checks passed except covered interest parity.
+- **Covered interest parity — WARNING:** The indicative bank forward quote exceeded the theoretical CIP-implied rate by approximately 0.06509 USD/EUR, above the model's 0.005 USD/EUR tolerance.
+
+The CIP warning was retained rather than changing the market inputs to force a passing result. The discrepancy reflects limitations associated with indicative bank pricing, different benchmark instruments, and the use of one-year interest-rate proxies for a 91-day exposure.
+
+The updated workbook was saved and committed to GitHub.
