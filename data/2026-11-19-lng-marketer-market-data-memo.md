@@ -37,7 +37,13 @@ The scenario's indicative bank forward and option premiums remain unchanged. Opt
 
 ## 4. Covered Interest Parity
 
-To be calculated after confirming all model inputs.
+Using the November 19, 2026 market inputs and the ACT/360 simple-interest convention:
+
+CIP-implied forward = 1.0967 × [1 + 0.0462 × (91/360)] / [1 + 0.03343 × (91/360)] = 1.100210 USD/EUR.
+
+The scenario's indicative bank forward quote is 1.165300 USD/EUR. The discrepancy (bank forward minus CIP-implied forward) is +0.065090 USD/EUR, exceeding the model's illustrative tolerance of 0.005 USD/EUR. Therefore, the CIP validation status is WARNING.
+
+This discrepancy should not automatically be interpreted as an executable arbitrage opportunity. The calculation uses one-year benchmark rates as proxies for 91-day corporate borrowing and investing, and the scenario's bank forward is indicative rather than a verified executable quote. The mismatch warrants investigation rather than an adjustment to force the validation check to PASS.
 
 ## 5. Workbook Population and Validation
 
