@@ -104,3 +104,39 @@ The audit identified a discrepancy between the indicative forward rate and the f
 
 ### Reflection
 This process helped me understand how AI can support financial modeling while still requiring human oversight. By reviewing the formulas and testing the model's results, I gained a better understanding of how different hedging strategies affect USD cash flows. I also learned that identifying and documenting a model warning is an important part of financial analysis rather than something that should automatically be corrected without investigation.
+
+## Stage 4 — Market Data and Workbook Population (November 19–20, 2026)
+
+**AI Tool Used:** ChatGPT (OpenAI)
+
+**Purpose:** To collect and document market observations, populate the existing FX hedging workbook, calculate covered interest parity, and validate the updated model for Scenario 27 — LNG Marketer.
+
+**Key Prompts and AI Assistance:**
+
+1. Requested step-by-step assistance finding the November 19, 2026 EUR/USD spot rate and one-year USD and EUR interest rates.
+2. Used ChatGPT to organize market-data values, source links, observation dates, and modeling limitations.
+3. Requested guidance calculating the covered interest parity (CIP) implied forward rate and interpreting the discrepancy with the scenario's bank forward quote.
+4. Followed ChatGPT's instructions to update the Excel workbook's named inputs without changing the existing formulas.
+5. Used AI-generated expected results to check the forward, money-market, currency-options, and sensitivity worksheets.
+6. Documented workbook validation results and the CIP warning in the market-data memo.
+
+**Human Verification and Decisions:**
+
+- Selected November 19, 2026 as the market observation date.
+- Recorded the EUR/USD spot rate of 1.0967, USD rate of 4.62%, and EUR rate of 3.343%, using the identified historical sources.
+- Retained the original scenario's 91-day maturity, indicative forward quote, and option premiums.
+- Set both option strikes to 1.0967 USD/EUR as an at-the-money modeling assumption.
+- Manually updated the workbook and confirmed that all hedge calculations remained formula-driven.
+- Verified all 11 sensitivity scenarios and the chart.
+- Confirmed that CIP displayed WARNING while all other validation checks displayed PASS.
+- Saved and committed the updated workbook and market-data memo to GitHub.
+
+**Limitations and Lessons Learned:**
+
+The one-year interest-rate benchmarks are proxies for a 91-day exposure and do not represent executable corporate borrowing or investment rates. The option strikes were assumed rather than obtained as bank quotes. The bank's indicative forward quote differs materially from the CIP-implied rate, so the discrepancy was documented rather than suppressed. AI-assisted calculations were checked against the Excel workbook, but the historical market observations and their precise publication timestamps require independent source verification.
+
+**Deliverables:**
+
+- `capabilities/fx-hedging/model.xlsx`
+- `data/2026-11-19-lng-marketer-market-data-memo.md`
+- `prompt-log.md`
