@@ -62,6 +62,8 @@ While the forward is the strongest strategy within the tested range, it sacrific
 
 Covered interest parity provides a theoretical forward exchange rate based on the current spot rate and interest-rate differential between the United States and the euro area.
 
+Applied to the €21.5 million receivable, the difference between the bank's indicative forward quote and the CIP-implied rate represents approximately **$1,399,425 in USD proceeds**. This substantial gap reinforces the need to verify the forward quote before execution. Although it does not change the conditional recommendation, it prevents management from treating the modeled forward proceeds as guaranteed until executable terms are confirmed.
+
 Using the November 19 market-data assumptions and ACT/360 simple interest, the CIP-implied forward rate is approximately **1.10021 USD/EUR**, compared with the bank's indicative quote of **1.1653 USD/EUR**. The discrepancy of approximately **0.06509 USD/EUR** exceeds the model's validation tolerance and produces a WARNING.
 
 This difference is financially significant and should not be interpreted as evidence of an immediately executable arbitrage opportunity. The model uses a one-year U.S. Treasury yield and 12-month Euribor as proxies for the company's 91-day financing rates. These benchmarks differ in maturity, credit characteristics, and market conventions. Furthermore, the bank's forward quote is indicative rather than confirmed.
