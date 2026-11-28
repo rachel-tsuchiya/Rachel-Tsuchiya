@@ -140,3 +140,55 @@ The one-year interest-rate benchmarks are proxies for a 91-day exposure and do n
 - `capabilities/fx-hedging/model.xlsx`
 - `data/2026-11-19-lng-marketer-market-data-memo.md`
 - `prompt-log.md`
+
+---
+
+## Stage 5 — Independent AI Validation and CFO Decision Memo
+
+**Date:** November 27, 2026  
+**Scenario:** 27 — LNG Marketer  
+**AI Tool:** ChatGPT
+
+### Prompt 1 — Independent Hedge Analysis
+
+**Purpose:** Independently calculate and evaluate the hedging strategies without relying on the completed Excel workbook.
+
+**Prompt Used:**
+
+> Using only the two documents provided (the FX Hedging Specification and Market-Data Memo), independently calculate all hedge outcomes for Scenario 27 — LNG Marketer, including the unhedged position, forward hedge, money-market hedge, EUR put option, and EUR call option.
+>
+> Evaluate the strategies across multiple future EUR/USD spot-rate scenarios, calculate the covered interest parity implied forward rate, and recommend a hedging strategy for the CFO.
+>
+> Show your formulas, intermediate calculations, assumptions, and any discrepancies or limitations.
+
+**AI Output:** [Independent AI Analysis](analysis/2026-11-27-lng-marketer-independent-ai-output.md)
+
+**Verification:** Compared the independent calculations with the Excel workbook. All 15 values across three representative exchange-rate scenarios matched. I also manually verified the forward hedge, money-market hedge, and protective put calculations.
+
+### Prompt 2 — Validation Analysis
+
+**Purpose:** Document the accuracy of the independent AI calculations and identify modeling limitations.
+
+**Prompt Summary:** Asked ChatGPT to help organize the independent AI results, Excel comparisons, manual calculation checks, CIP discrepancy, and specification limitations into a validation report.
+
+**AI Output:** [Stage 5 Validation Analysis](analysis/2026-11-27-lng-marketer-validation-analysis.md)
+
+**Verification:** Reviewed the calculations against the workbook and confirmed that the CIP WARNING was retained rather than incorrectly changed to PASS.
+
+### Prompt 3 — CFO Decision Memo
+
+**Purpose:** Translate the technical hedging calculations into a business recommendation for the CFO.
+
+**Prompt Summary:** Used ChatGPT to draft and refine a CFO decision memo covering the executive summary, hedge comparison, sensitivity analysis, covered interest parity discrepancy, execution considerations, and final recommendation.
+
+**AI Output:** [CFO Decision Memo](docs/decisions/2026-11-27-lng-marketer-hedge-decision-memo.md)
+
+**Verification:** Checked the memo against the validated financial results and maintained the distinction between an indicative forward quote and an executable contract.
+
+### Stage 5 Reflection
+
+AI was useful for independently calculating hedge outcomes, organizing comparisons, and communicating financial results to a business audience. However, the analysis also demonstrated the importance of human verification and careful interpretation of market assumptions.
+
+The most significant issue was the difference between the indicative bank forward rate and the CIP-implied rate. Although the forward hedge produced the highest modeled proceeds, the discrepancy highlighted the need to confirm executable pricing and use maturity-matched interest rates before making a final decision.
+
+This stage reinforced that AI-generated financial analysis should support, rather than replace, independent calculation, critical evaluation, and professional judgment.
