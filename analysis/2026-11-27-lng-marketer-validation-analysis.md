@@ -30,11 +30,11 @@ All amounts are in USD. The EUR call represents a **purchase cost**, not proceed
 | EUR put, −5% | 1.041865 | $23,259,309.06 | $23,259,309.06 | $0.00 |
 | EUR put, 0% | 1.096700 | $23,259,309.06 | $23,259,309.06 | $0.00 |
 | EUR put, +5% | 1.151535 | $24,438,261.56 | $24,438,261.56 | $0.00 |
-| EUR call cost, −5% | 1.041865 | $22,832,944.07 | $22,832,944.07 | Pending Excel confirmation |
-| EUR call cost, 0% | 1.096700 | $24,011,896.57 | $24,011,896.57 | Pending Excel confirmation |
-| EUR call cost, +5% | 1.151535 | $24,011,896.57 | $24,011,896.57 | Pending Excel confirmation |
+| EUR call cost, −5% | 1.041865 | $22,832,944.07 | $22,832,944.07 | $0.00 |
+| EUR call cost, 0% | 1.096700 | $24,011,896.57 | $24,011,896.57 | $0.00 |
+| EUR call cost, +5% | 1.151535 | $24,011,896.57 | $24,011,896.57 | $0.00 |
 
-The student directly confirmed the 12 unhedged, forward, money-market, and put results against the Excel sensitivity worksheet. The call results agree with independent arithmetic but still require direct Excel confirmation.
+The student directly confirmed all 15 results across the unhedged, forward, money-market, EUR put, and EUR call calculations against the Excel workbook. All results matched the independent AI output, with no discrepancies identified.
 
 No discrepancies were identified among the 12 confirmed sensitivity values.
 
